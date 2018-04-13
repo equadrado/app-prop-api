@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: app-prop-api
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: equadrado
+Implementation-Vendor-Id: com.square.rbc
+Build-Jdk: 1.8.0_101
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/app-prop-api
+Created-By: Maven Integration for Eclipse
+
