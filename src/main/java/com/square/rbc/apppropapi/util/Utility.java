@@ -9,7 +9,6 @@ import java.io.Serializable;
 import org.springframework.util.Base64Utils;
 
 import com.google.gson.Gson;
-import com.square.rbc.apppropapi.model.AppConfig;
 
 /**
  * 
