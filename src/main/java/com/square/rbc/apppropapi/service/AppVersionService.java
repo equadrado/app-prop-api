@@ -58,7 +58,8 @@ public class AppVersionService {
 		if (appVersion == null) {
 			throw new ObjectNotFoundException("APP_VERSION_ID", version);
 		}
-		AppConfig appConfig = (AppConfig) Utility.stringToSerializable(appVersion.getConfig());
+//		AppConfig appConfig = (AppConfig) Utility.stringToSerializable(appVersion.getConfig());
+		AppConfig appConfig = (AppConfig) Utility.jsonToObject(appVersion.getConfig(), AppConfig.class);
 		
 		return appConfig;
 	}
@@ -106,7 +107,8 @@ public class AppVersionService {
 		appVersion.setVersion(version);
 		appVersion.setLastmodification(new Date());
 		// Transform the AppConfig Object into String
-		appVersion.setConfig(Utility.serializableToString(config));
+//		appVersion.setConfig(Utility.serializableToString(config));
+		appVersion.setConfig(Utility.objectToJson(config));
 
 		appVersionRepository.save(appVersion);
 

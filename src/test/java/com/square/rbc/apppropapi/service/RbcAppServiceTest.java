@@ -51,7 +51,7 @@ public class RbcAppServiceTest {
 
 		Optional<RbcApp> rbcAppMock = Optional.of(new RbcApp());
 		
-		rbcAppMock.get().setId(new Long(0));
+		rbcAppMock.get().setId(0L);
 		rbcAppMock.get().setName("RBC App Mock");
 		rbcAppMock.get().setDescription("App Description");
 		rbcAppMock.get().setAppVersions(appVerListMock);
@@ -75,7 +75,7 @@ public class RbcAppServiceTest {
 
 		Optional<RbcApp> rbcAppMock = Optional.of(new RbcApp());
 		
-		rbcAppMock.get().setId(new Long(1));
+		rbcAppMock.get().setId(1L);
 		rbcAppMock.get().setName("RBC App Mock");
 		rbcAppMock.get().setDescription("App Description");
 		rbcAppMock.get().setAppVersions(appVerListMock);
