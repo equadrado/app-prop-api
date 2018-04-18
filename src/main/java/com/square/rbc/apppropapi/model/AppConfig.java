@@ -1,7 +1,5 @@
 package com.square.rbc.apppropapi.model;
 
-import java.io.Serializable;
-
 /**
  * 
  * @author equadrado
@@ -10,7 +8,7 @@ import java.io.Serializable;
  * All fields are not mandatory, therefore an object may contain all or none of its properties
  * 
  */
-public class AppConfig implements Serializable {
+public class AppConfig {
 
 	private String server_servlet_contextPath;
 	private String spring_datasource_url;

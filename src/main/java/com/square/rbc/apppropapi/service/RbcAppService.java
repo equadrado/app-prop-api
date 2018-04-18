@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.square.rbc.apppropapi.dto.AppVersionDTO;
 import com.square.rbc.apppropapi.dto.RbcAppDTO;
@@ -63,18 +64,30 @@ public class RbcAppService {
 	 * @return A List with all versions and configurations linked to that Application 	 * @throws ObjectNotFoundException
 	 * @throws InvalidPathParameterException
 	 */
+	@Transactional(readOnly=true)
 	public List<AppVersionDTO> getConfigByAppId(Long id) throws ObjectNotFoundException, InvalidPathParameterException {
 		
 		RbcApp rbcApp = this.findById(id);
-		
 		if (rbcApp == null) {
-			throw new ObjectNotFoundException("APP_OBJ", id.toString());
+			throw new ObjectNotFoundException("RBC_APP", id.toString());
 		}
-		List<AppVersion> appVersionList = rbcAppRepository.findRbcAppByIdOrdered(id).getAppVersions();
-
-		Collections.sort(appVersionList); 		
 		
-		List<AppVersionDTO> appDTOList = new ArrayList<AppVersionDTO>();
+		if (rbcApp.getAppVersions().isEmpty()) {
+			throw new ObjectNotFoundException("APP_VER", id.toString());
+		}
+		
+		// It's not ncessary call it again
+		// List<AppVersion> appVersionList = rbcAppRepository.findRbcAppByIdOrdered(id).getAppVersions();
+		List<AppVersion> appVersionList = rbcApp.getAppVersions();
+		
+		// change the order to descend
+		AppVersion.ascend = false;
+		// Sort the list
+		Collections.sort(appVersionList); 	
+		// if the descend order was not implemented, could revese the order using method Collections.reverse()
+		//Collections.reverse(appVersionList);
+		
+		List<AppVersionDTO> appVerDTOList = new ArrayList<AppVersionDTO>();
 		
 		for(AppVersion app: appVersionList) {
 			AppVersionDTO dto = new AppVersionDTO();
@@ -83,13 +96,19 @@ public class RbcAppService {
 			dto.setId(app.getId());
 			dto.setVersion(app.getVersion());
 			dto.setLastModificationDate(app.getLastmodification());
-			// Transform the String into AppConfig Object
-			dto.setConfig((AppConfig) Utility.stringToSerializable(app.getConfig()));
 			
-			appDTOList.add(dto);
+			// Transform the String into AppConfig Object
+			
+			// using Base64 library			
+			// dto.setConfig((AppConfig) Utility.stringToSerializable(app.getConfig()));
+			
+			// Using gson library
+			dto.setConfig((AppConfig) Utility.jsonToObject(app.getConfig(), AppConfig.class));
+			
+			appVerDTOList.add(dto);
 		}
 		
-		return appDTOList;
+		return appVerDTOList;
 	}
 
 	/**

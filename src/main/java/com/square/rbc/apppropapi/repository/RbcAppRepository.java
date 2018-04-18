@@ -16,7 +16,7 @@ public interface RbcAppRepository extends JpaRepository<RbcApp, Long> {
 	/**
 	 * 
 	 * @param parId
-	 * @return An Application with all its versions ordered by modification date in descendent
+	 * @return An Application with all its versions ordered by modification date in descendant
 	 * 			order
 	 */
 	@Query

@@ -22,6 +22,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @Table(name = "appversion")
 public class AppVersion implements Comparable<AppVersion> {
+	public static boolean ascend = true; // true for ascend order, false for descend
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -91,13 +93,29 @@ public class AppVersion implements Comparable<AppVersion> {
 	}
 
 	@Override
-	public int compareTo(AppVersion o) {
-		// TODO Auto-generated method stub
-	    return lastmodification.compareTo(o.getLastmodification()) > 0 ? -1 : lastmodification.compareTo(o.getLastmodification()) < 0 ? 1 : doSecodaryOrderSort(o);
+	public int compareTo(AppVersion obj) {
+//	    return lastmodification.compareTo(obj.getLastmodification()) > 0 ? -1 : lastmodification.compareTo(obj.getLastmodification()) < 0 ? 1 : doSecodaryOrderSort(obj);
+		return doPrimaryOrderSort(obj);
 	}
 	
-	public int doSecodaryOrderSort(AppVersion o) {
-	    return creation.compareTo(o.getCreation()) < 0 ? -1 : creation.compareTo(o.getCreation()) > 0 ? 1 : 0;
+	/**
+	 * order by the first property (in this case, "lastmodification")
+	 * @param other
+	 * @return
+	 */
+	public int doPrimaryOrderSort(AppVersion other) {
+		int base = ascend ? 1 : -1; 
+	    return this.lastmodification.compareTo(other.getLastmodification()) > 0 ? base : this.lastmodification.compareTo(other.getLastmodification()) < 0 ? -1*base : doSecodaryOrderSort(other);
+	}
+	
+	/**
+	 * order by a second property (in this case, "creation")
+	 * @param other
+	 * @return
+	 */
+	public int doSecodaryOrderSort(AppVersion other) {
+		int base = ascend ? 1 : -1; 
+	    return this.creation.compareTo(other.getCreation()) > 0 ? base : this.creation.compareTo(other.getCreation()) <= 0 ? -1*base : 0;
 	}
 
 }

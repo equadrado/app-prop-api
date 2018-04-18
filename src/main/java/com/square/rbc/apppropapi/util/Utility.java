@@ -74,13 +74,18 @@ public class Utility {
 		return jsonInString;
 	}
 	
+	/**
+	 * 
+	 * @param json
+	 * @param cls represents the class type to convert the json data. Must be called as "ClassName.class"
+	 * @return
+	 */
 	public static Object jsonToObject(String json, Class<?> cls) {
 		Gson gson = new Gson();
 		
 		// JSON to Java object (of "cls" Type), read it from a Json String.
 		Object object = gson.fromJson(json, cls);
 		
-		return object;
-		
+		return object;	
 	}
 }

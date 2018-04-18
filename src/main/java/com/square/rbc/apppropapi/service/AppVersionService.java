@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.square.rbc.apppropapi.exception.InvalidPathParameterException;
 import com.square.rbc.apppropapi.exception.InvalidTextPropertySizeException;
@@ -39,6 +40,7 @@ public class AppVersionService {
 	 * @throws ObjectNotFoundException
 	 * @throws InvalidPathParameterException
 	 */
+	@Transactional(readOnly=true)
 	public AppConfig findByIdAndByVersion(Long id, String version)
 			throws ObjectNotFoundException, InvalidPathParameterException {
 
@@ -52,13 +54,15 @@ public class AppVersionService {
 			throw new ObjectNotFoundException("RBC_APP", id.toString());
 		}
 
-//		AppVersion appVersion = appVersionRepository.findByVersionAndRbcApp(version, rbcApp);
 		AppVersion appVersion = appVersionRepository.findByVersionAndRbcAppId(version, id);
 		
 		if (appVersion == null) {
 			throw new ObjectNotFoundException("APP_VERSION_ID", version);
 		}
-//		AppConfig appConfig = (AppConfig) Utility.stringToSerializable(appVersion.getConfig());
+		// Using Base64 library
+		//AppConfig appConfig = (AppConfig) Utility.stringToSerializable(appVersion.getConfig());
+
+		// Using gson library
 		AppConfig appConfig = (AppConfig) Utility.jsonToObject(appVersion.getConfig(), AppConfig.class);
 		
 		return appConfig;

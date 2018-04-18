@@ -1,5 +1,7 @@
 package com.square.rbc.apppropapi.dto;
 
+import org.springframework.http.HttpStatus;
+
 /**
  * 
  * @author equadrado
@@ -9,6 +11,7 @@ public class ExceptionJsonDTO {
 
 	private String url;
 	private String message;
+	private HttpStatus status;
 
 	public String getUrl() {
 		return url;
@@ -24,6 +27,14 @@ public class ExceptionJsonDTO {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public HttpStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(HttpStatus status) {
+		this.status = status;
 	}
 
 }

@@ -30,11 +30,12 @@ public class AppVersionController {
 	 * 
 	 * @param appCode
 	 * @param version
-	 * @return An AppConfig object, with the configuration for the version passed as parameter 
-	 * 			and for the Application with the ID passed as parameter (appCode)
+	 * @return An AppConfig object, with the configuration for the version
+	 *         passed as parameter and for the Application with the ID passed as
+	 *         parameter (appCode)
 	 * @throws Exception
 	 */
-	@GetMapping(value="{appCode}/config/{version}", produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "{appCode}/config/{version}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public AppConfig getAppByIdAndVersion(@PathVariable(name = "appCode") Long appCode,
 			@PathVariable(name = "version") String version) throws Exception {
 		return appVersionService.findByIdAndByVersion(appCode, version);
@@ -45,10 +46,11 @@ public class AppVersionController {
 	 * @param appCode
 	 * @param version
 	 * @param config
-	 * @return True if the AppVersion (config parameter) object was successful stored in the DB
+	 * @return True if the AppVersion (config parameter) object was successful
+	 *         stored in the DB
 	 * @throws Exception
 	 */
-	@PostMapping(value="{appCode}/config/{version}", produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "{appCode}/config/{version}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean createAppVersion(@PathVariable(name = "appCode") Long appCode,
 			@PathVariable(name = "version") String version, @RequestBody() AppConfig config) throws Exception {
 		return appVersionService.saveAppVersion(appCode, version, config);
@@ -59,10 +61,11 @@ public class AppVersionController {
 	 * @param appCode
 	 * @param version
 	 * @param config
-	 * @return True if the AppVersion (config parameter) object was successful stored in the DB
+	 * @return True if the AppVersion (config parameter) object was successful
+	 *         stored in the DB
 	 * @throws Exception
 	 */
-	@PutMapping(value="{appCode}/config/{version}", produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "{appCode}/config/{version}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public boolean updateAppVersion(@PathVariable(name = "appCode") Long appCode,
 			@PathVariable(name = "version") String version, @RequestBody() AppConfig config) throws Exception {
 		return appVersionService.saveAppVersion(appCode, version, config);
